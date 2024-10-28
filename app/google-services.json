@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "581655859289",
+    "project_id": "lionchat-fca3e",
+    "storage_bucket": "lionchat-fca3e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:581655859289:android:519913293638f942d72148",
+        "android_client_info": {
+          "package_name": "com.example.lionchat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkWpOu3EeF4XVod2k8DDtgHWaaucpPiNA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
