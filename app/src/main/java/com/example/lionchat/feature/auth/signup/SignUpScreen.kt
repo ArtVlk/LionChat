@@ -41,21 +41,13 @@ fun SignUpScreen(navController: NavController) {
 
     val uiState = viewModel.state.collectAsState()
 
-    var name by remember {
-        mutableStateOf("")
-    }
+    var name by remember { mutableStateOf("") }
 
-    var email by remember {
-        mutableStateOf("")
-    }
+    var email by remember { mutableStateOf("") }
 
-    var password by remember {
-        mutableStateOf("")
-    }
+    var password by remember { mutableStateOf("") }
 
-    var confirm by remember {
-        mutableStateOf("")
-    }
+    var confirm by remember { mutableStateOf("") }
 
     val context = LocalContext.current
     LaunchedEffect(key1 = uiState.value) {

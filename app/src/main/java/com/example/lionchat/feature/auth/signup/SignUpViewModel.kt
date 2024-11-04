@@ -1,45 +1,38 @@
 package com.example.lionchat.feature.auth.signup
 
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseAuth
+import androidx.lifecycle.viewModelScope
+import com.example.lionchat.services.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor() : ViewModel() {
+class SignUpViewModel @Inject constructor(
+    private val userRepository: UserRepository
+) : ViewModel() {
 
     private val _state = MutableStateFlow<SignUpState>(SignUpState.Nothing)
     val state = _state.asStateFlow()
 
     fun signUp(name: String, email: String, password: String) {
-        _state.value = SignUpState.Loading
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    task.result.user?.let {
-                        it.updateProfile(
-                            com.google.firebase.auth.UserProfileChangeRequest.Builder()
-                                .setDisplayName(name)
-                                .build()
-                        )?.addOnCompleteListener {
-                            _state.value = SignUpState.Success
-                        }
-                        return@addOnCompleteListener
-                    }
-                    _state.value = SignUpState.Error
-
-                } else {
-                    _state.value = SignUpState.Error
-                }
+        viewModelScope.launch {
+            _state.value = SignUpState.Loading
+            val result = userRepository.signUp(name, email, password)
+            _state.value = if (result.isSuccess) {
+                SignUpState.Success
+            } else {
+                SignUpState.Error
             }
+        }
     }
 }
 
 sealed class SignUpState {
-    object Nothing : SignUpState()
-    object Loading : SignUpState()
-    object Success : SignUpState()
-    object Error : SignUpState()
+    data object Nothing : SignUpState()
+    data object Loading : SignUpState()
+    data object Success : SignUpState()
+    data object Error : SignUpState()
 }

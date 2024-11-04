@@ -20,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -36,19 +35,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.lionchat.R
-import com.example.lionchat.feature.auth.signup.SignUpScreen
 
 @Composable
 fun SignInScreen(navController: NavController) {
     val viewModel: SignInViewModel = hiltViewModel()
     val uiState = viewModel.state.collectAsState()
-    var email by remember {
-        mutableStateOf("")
-    }
+    var email by remember { mutableStateOf("") }
 
-    var password by remember {
-        mutableStateOf("")
-    }
+    var password by remember { mutableStateOf("") }
 
     val context = LocalContext.current
     LaunchedEffect(key1 = uiState.value) {
