@@ -1,7 +1,6 @@
 package com.example.lionchat.services
 
 import com.google.firebase.auth.FirebaseAuth
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
