@@ -8,10 +8,10 @@
     Отправка сообщений, в том числе фотографий
     
 ### Используваемые технологии
-    - Kotlin
-    - Firebase
-    - Gradle
-    - Android Studio
+- Kotlin
+- Firebase
+- Gradle
+- Android Studio
 
 ### Авторы
     Абрамова Елена, КН-302 (МЕН-320202)
