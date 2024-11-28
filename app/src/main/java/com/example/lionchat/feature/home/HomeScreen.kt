@@ -67,7 +67,7 @@ fun HomeScreen(navController: NavController){
                     color = Color.Black
                 )
             }
-        }, containerColor = Color(0xFFFFF9C4)
+        }, containerColor = Color(0xFF432818) // фон
     ){
         Box(
             modifier = Modifier
@@ -78,7 +78,7 @@ fun HomeScreen(navController: NavController){
                 item {
                     Text(
                         text = "Messages" ,
-                        color = Color.Black,
+                        color = Color(0xFFFFE7B8),
                         style = TextStyle(fontSize = 20.sp,
                             fontWeight = FontWeight.Black),
                         modifier = Modifier.padding(16.dp))
@@ -92,12 +92,12 @@ fun HomeScreen(navController: NavController){
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp, vertical = 8.dp)
-                            .background(Color(0xFFFFF9C4))
+                            .background(Color(0xFF432818))
                             .clip(RoundedCornerShape(40.dp)),
                         textStyle = TextStyle(color = Color.Black),
                         colors = TextFieldDefaults.colors().copy(
-                            focusedContainerColor = Color(0xFFFAED8B),
-                            unfocusedContainerColor = Color(0xFFFAED8B),
+                            focusedContainerColor = Color(0xFFffe6a7),
+                            unfocusedContainerColor = Color(0xFFffe6a7),
                             focusedTextColor = Color.Black,
                             unfocusedTextColor = Color.Black,
                             focusedPlaceholderColor = Color.Gray,
@@ -144,7 +144,7 @@ fun ChannelItem(channelName: String, modifier: Modifier,onClick: () -> Unit) {
         .fillMaxWidth()
         .padding(horizontal = 16.dp, vertical = 2.dp)
         .clip(RoundedCornerShape(16.dp))
-        .background(Color(0xFFFAED8B))
+        .background(Color(0xFFffe6a7))
         .clickable {
         onClick()
     },
@@ -154,7 +154,7 @@ fun ChannelItem(channelName: String, modifier: Modifier,onClick: () -> Unit) {
             .padding(8.dp)
             .size(70.dp)
             .clip(CircleShape)
-            .background(Color(0xFFFFE082))
+            .background(Color(0xFFffe6a7))
             .shadow(2.dp, CircleShape, ambientColor = Color(0xFFFF4100).copy(alpha = 0.3f))
         ){
             Text(
