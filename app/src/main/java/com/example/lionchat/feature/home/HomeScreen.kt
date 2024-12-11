@@ -15,6 +15,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
@@ -37,6 +39,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -51,6 +54,17 @@ fun HomeScreen(navController: NavController){
     val channels = viewModel.channels.collectAsState()
     val addChannel = remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState()
+    val searchQuery = remember { mutableStateOf("") }
+
+    val filteredChannels = remember(channels.value, searchQuery.value) {
+        if (searchQuery.value.isEmpty()) {
+            channels.value // Если поле поиска пустое, отображаем все каналы
+        } else {
+            channels.value.filter { channel ->
+                channel.name.startsWith(searchQuery.value, ignoreCase = true) // Фильтрация по начальным символам
+            }
+        }
+    }
 
     Scaffold(
         floatingActionButton = {
@@ -71,8 +85,8 @@ fun HomeScreen(navController: NavController){
     ){
         Box(
             modifier = Modifier
-            .padding(it)
-            .fillMaxSize()
+                .padding(it)
+                .fillMaxSize()
         ) {
             LazyColumn {
                 item {
@@ -86,8 +100,8 @@ fun HomeScreen(navController: NavController){
 
                 item {
                     TextField(
-                        value = "",
-                        onValueChange = {},
+                        value = searchQuery.value,
+                        onValueChange = { searchQuery.value = it },
                         placeholder = { Text(text = "Search...") },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -111,11 +125,17 @@ fun HomeScreen(navController: NavController){
                                 contentDescription = null,
                                 tint = Color.Black // Цвет иконки
                             )
-                        }
+                        },
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            imeAction = ImeAction.Done // Убираем возможность ввода Enter
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onDone = {}
+                        )
                     )
                 }
 
-                items(channels.value) {channel ->
+                items(filteredChannels) {channel ->
                     Column {
                         ChannelItem(
                             channelName = channel.name,
@@ -146,8 +166,8 @@ fun ChannelItem(channelName: String, modifier: Modifier,onClick: () -> Unit) {
         .clip(RoundedCornerShape(16.dp))
         .background(Color(0xFFffe6a7))
         .clickable {
-        onClick()
-    },
+            onClick()
+        },
         verticalAlignment = Alignment.CenterVertically
     ){
         Box(modifier = Modifier
